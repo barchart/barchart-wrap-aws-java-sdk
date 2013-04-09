@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -23,6 +24,12 @@
 	<properties>
 
 		<amazonVersion>1.4.1</amazonVersion>
+
+		<apacheCodecVersion>[1.6,1.7)</apacheCodecVersion>
+		<apacheLoggingVersion>[1.1,1.2)</apacheLoggingVersion>
+		<apacheHttpVersion>[4.2,4.3)</apacheHttpVersion>
+
+		<jacksonVersion>[1.9,2.0)</jacksonVersion>
 
 		<unpackSource>target/unpack-source</unpackSource>
 
@@ -155,6 +162,10 @@
 							Embed-Transitive,
 						</_removeheaders>
 						<Import-Package>
+							org.apache.commons.codec.*;version="${apacheCodecVersion}",
+							org.apache.commons.logging.*;version="${apacheLoggingVersion}",
+							org.apache.http.*;version="${apacheHttpVersion}",
+							org.codehaus.jackson.*;version="${jacksonVersion}",
 							*;resolution:=optional,
 						</Import-Package>
 						<Embed-Dependency>
@@ -162,7 +173,7 @@
 						</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
 						<Export-Package>
-							com.amazonaws.*;version=${amazonVersion},
+							com.amazonaws.*;version="${amazonVersion}",
 						</Export-Package>
 					</instructions>
 				</configuration>
