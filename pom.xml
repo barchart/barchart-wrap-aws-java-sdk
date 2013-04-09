@@ -10,14 +10,14 @@
 
 	<groupId>com.barchart.wrap</groupId>
 	<artifactId>barchart-wrap-aws-java-sdk</artifactId>
-	<version>1.4.1-build002</version>
+	<version>1.4.1-build003-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<scm>
 		<url>https://github.com/barchart/barchart-wrap-aws-java-sdk</url>
 		<connection>scm:git:git://github.com/barchart/barchart-wrap-aws-java-sdk.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-wrap-aws-java-sdk.git</developerConnection>
-		<tag>barchart-wrap-aws-java-sdk-1.4.1-build002</tag>
+		<tag>master</tag>
 	</scm>
 
 	<properties>
