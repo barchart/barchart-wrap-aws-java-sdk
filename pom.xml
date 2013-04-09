@@ -11,7 +11,7 @@
 
 	<groupId>com.barchart.wrap</groupId>
 	<artifactId>barchart-wrap-aws-java-sdk</artifactId>
-	<version>1.4.1-build001-SNAPSHOT</version>
+	<version>1.4.1-build002-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<scm>
