@@ -24,8 +24,8 @@
 
 		<amazonVersion>1.4.1</amazonVersion>
 
-		<apacheCodecVersion>[1.6,1.7)</apacheCodecVersion>
-		<apacheLoggingVersion>[1.1,1.2)</apacheLoggingVersion>
+		<apacheCodecVersion>[1.6,2-SNAPSHOT)</apacheCodecVersion>
+		<apacheLoggingVersion>[1.1,2-SNAPSHOT)</apacheLoggingVersion>
 		<apacheHttpVersion>[4.2,4.3)</apacheHttpVersion>
 
 		<jacksonVersion>[1.9,2.0)</jacksonVersion>
