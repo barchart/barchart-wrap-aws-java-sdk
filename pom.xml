@@ -142,7 +142,6 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<_failok>true</_failok>
 						<_removeheaders>
 							Service-Component,
 							Include-Resource,
@@ -159,7 +158,7 @@
 							*;resolution:=optional,
 						</Import-Package>
 						<Export-Package>
-							com.amazonaws.*;version="${amazonVersion}",
+							com.amazonaws.*;version="${amazonVersion}";-split-package:=merge-last,
 						</Export-Package>
 					</instructions>
 				</configuration>
