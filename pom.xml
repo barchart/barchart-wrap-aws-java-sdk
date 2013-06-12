@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -36,34 +37,13 @@
 
 	<dependencies>
 
-		<!-- -->
+		<!-- Embedded, non transitive. -->
+
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>${amazonVersion}</version>
 			<optional>true</optional>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-codec</groupId>
-					<artifactId>commons-codec</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.httpcomponents</groupId>
-					<artifactId>httpclient</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.codehaus.jackson</groupId>
-					<artifactId>jackson-core-asl</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.codehaus.jackson</groupId>
-					<artifactId>jackson-mapper-asl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 	</dependencies>
@@ -72,7 +52,7 @@
 
 		<plugins>
 
-			<!-- unpack source -->
+			<!-- unpack source and dependencies -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -86,8 +66,21 @@
 						<configuration>
 							<classifier>sources</classifier>
 							<includeScope>compile</includeScope>
+							<excludeTransitive>true</excludeTransitive>
 							<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
 							<outputDirectory>${unpackSource}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeScope>compile</includeScope>
+							<excludeTransitive>true</excludeTransitive>
+							<outputDirectory>target/classes</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -120,7 +113,6 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>prepare-package</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
@@ -161,16 +153,12 @@
 							Embed-Transitive,
 						</_removeheaders>
 						<Import-Package>
-							org.apache.commons.codec.*;version="${apacheCodecVersion}",
-							org.apache.commons.logging.*;version="${apacheLoggingVersion}",
-							org.apache.http.*;version="${apacheHttpVersion}",
-							org.codehaus.jackson.*;version="${jacksonVersion}",
+							org.apache.commons.codec.*;version="${apacheCodecVersion}";resolution:=mandatory,
+							org.apache.commons.logging.*;version="${apacheLoggingVersion}";resolution:=mandatory,
+							org.apache.http.*;version="${apacheHttpVersion}";resolution:=mandatory,
+							org.codehaus.jackson.*;version="${jacksonVersion}";resolution:=mandatory,
 							*;resolution:=optional,
 						</Import-Package>
-						<Embed-Dependency>
-							*;scope=compile;inline=true,
-						</Embed-Dependency>
-						<Embed-Transitive>true</Embed-Transitive>
 						<Export-Package>
 							com.amazonaws.*;version="${amazonVersion}",
 						</Export-Package>
