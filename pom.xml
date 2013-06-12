@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -22,13 +23,14 @@
 
 	<properties>
 
+		<!-- Export. -->
 		<amazonVersion>1.4.5</amazonVersion>
 
+		<!-- Import. -->
+		<jacksonVersion>[1.9,2.0)</jacksonVersion>
+		<apacheHttpVersion>[4.2.4-SNAPSHOT,4.3.0-SNAPSHOT)</apacheHttpVersion>
 		<apacheCodecVersion>[1.6,2)</apacheCodecVersion>
 		<apacheLoggingVersion>[1.1,2)</apacheLoggingVersion>
-		<apacheHttpVersion>[4.2,4.3)</apacheHttpVersion>
-
-		<jacksonVersion>[1.9,2.0)</jacksonVersion>
 
 		<unpackSource>target/unpack-source</unpackSource>
 
@@ -42,15 +44,40 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>${amazonVersion}</version>
+			<scope>provided</scope>
 			<optional>true</optional>
+			<exclusions>
+				<!-- Conflicts with apache http. -->
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
+		<!-- Not embedded, transitive. -->
 
 		<dependency>
 			<groupId>com.barchart.wrap</groupId>
 			<artifactId>barchart-wrap-apache-http-all</artifactId>
-			<version>[4.2.4-SNAPSHOT,4.3-SNAPSHOT)</version>
+			<version>${apacheHttpVersion}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jacksonVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jacksonVersion}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -70,7 +97,7 @@
 						</goals>
 						<configuration>
 							<classifier>sources</classifier>
-							<includeScope>compile</includeScope>
+							<includeScope>provided</includeScope>
 							<excludeTransitive>true</excludeTransitive>
 							<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
 							<outputDirectory>${unpackSource}</outputDirectory>
@@ -83,7 +110,7 @@
 							<goal>unpack-dependencies</goal>
 						</goals>
 						<configuration>
-							<includeScope>compile</includeScope>
+							<includeScope>provided</includeScope>
 							<excludeTransitive>true</excludeTransitive>
 							<outputDirectory>target/classes</outputDirectory>
 						</configuration>
@@ -157,10 +184,10 @@
 							Embed-Transitive,
 						</_removeheaders>
 						<Import-Package>
-							org.apache.commons.codec.*;version="${apacheCodecVersion}";resolution:=mandatory,
-							org.apache.commons.logging.*;version="${apacheLoggingVersion}";resolution:=mandatory,
-							org.apache.http.*;version="${apacheHttpVersion}";resolution:=mandatory,
-							org.codehaus.jackson.*;version="${jacksonVersion}";resolution:=mandatory,
+							org.apache.commons.codec.*;version="${apacheCodecVersion}",
+							org.apache.commons.logging.*;version="${apacheLoggingVersion}",
+							org.apache.http.*;version="${apacheHttpVersion}";,
+							org.codehaus.jackson.*;version="${jacksonVersion}",
 							*;resolution:=optional,
 						</Import-Package>
 						<Export-Package>
