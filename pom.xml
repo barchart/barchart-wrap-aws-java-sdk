@@ -28,7 +28,7 @@
 
 		<!-- Import. -->
 		<jacksonVersion>[1.9,2.0)</jacksonVersion>
-		<apacheHttpVersion>[4.2.4-SNAPSHOT,4.3.0-SNAPSHOT)</apacheHttpVersion>
+		<apacheHttpVersion>[4.2.4,4.3.0)</apacheHttpVersion>
 		<apacheCodecVersion>[1.6,2)</apacheCodecVersion>
 		<apacheLoggingVersion>[1.1,2)</apacheLoggingVersion>
 
